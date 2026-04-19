@@ -1,0 +1,41 @@
+tech_topics:
+  - AI
+  - Apple
+  - Google
+  - Microsoft
+  - Meta
+  - startups
+  - open source
+
+sports:
+  - sport: NBA
+    teams:
+      - Warriors
+      - Lakers
+  - sport: NFL
+    teams:
+      - Patriots
+  - sport: F1
+  - sport: Cricket
+    teams:
+      - India
+      - Chennai Super Kings
+  - sport: Tennis
+
+stocks:
+  - AAPL
+  - NVDA
+  - MSFT
+  - GOOGL
+  - TSLA
+  - AVGO
+  - META
+  - AMZN
+  - NFLX
+  - AMD
+
+
+email:
+  send_time: "10:00"
+  timezone: "America/New_York"
+  stock_day: "Friday"
