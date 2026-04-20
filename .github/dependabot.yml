@@ -1,0 +1,42 @@
+version: 2
+
+updates:
+  # Keep Python dependencies up to date
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 5
+    target-branch: "master"
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      langchain:
+        patterns:
+          - "langgraph*"
+          - "langchain*"
+      anthropic:
+        patterns:
+          - "anthropic"
+      aws-data:
+        patterns:
+          - "yfinance"
+          - "newsapi-python"
+
+  # Keep GitHub Actions up to date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 5
+    target-branch: "master"
+    labels:
+      - "dependencies"
+      - "github-actions"
