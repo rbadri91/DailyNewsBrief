@@ -1,9 +1,11 @@
 import requests
 from config import NEWSAPI_KEY
+from tools.retry import http_retry
 
 NEWSAPI_BASE = "https://newsapi.org/v2"
 
 
+@http_retry
 def fetch_tech_news(topics: list[str], page_size: int = 10) -> list[dict]:
     query = " OR ".join(topics)
     resp = requests.get(
@@ -21,6 +23,7 @@ def fetch_tech_news(topics: list[str], page_size: int = 10) -> list[dict]:
     return resp.json().get("articles", [])
 
 
+@http_retry
 def fetch_sports_news(teams: list[str], sports: list[str], page_size: int = 10) -> list[dict]:
     query_parts = teams + sports
     query = " OR ".join(query_parts)

@@ -1,6 +1,7 @@
 import requests
 import yfinance as yf
 from config import ALPHA_VANTAGE_KEY
+from tools.retry import http_retry
 
 
 def fetch_stock_data(ticker: str) -> dict:
@@ -37,6 +38,7 @@ def fetch_stock_data(ticker: str) -> dict:
     }
 
 
+@http_retry
 def fetch_stock_news(ticker: str) -> list[dict]:
     resp = requests.get(
         "https://www.alphavantage.co/query",
