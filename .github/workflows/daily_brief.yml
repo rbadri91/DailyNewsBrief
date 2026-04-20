@@ -2,7 +2,8 @@ name: Daily News Brief
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # 10am EST = 15:00 UTC (note: fires at 11am during EDT/daylight saving)
+    - cron: '0 15 * * *'  # 10am CDT (summer) / 9am CST (winter) — matches 10am EST/EDT for Eastern users
+                          # To lock to 10am CST year-round (no DST shift), use: 0 16 * * *
   workflow_dispatch:       # manual trigger for testing
 
 env:
