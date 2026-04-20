@@ -1,53 +1,178 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: Georgia, serif;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 20px;
-      color: #222;
+      background-color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: #1a1a2e;
       line-height: 1.6;
     }
-    h1 { font-size: 24px; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-    h2 { font-size: 18px; color: #333; margin-top: 32px; margin-bottom: 8px; }
-    a { color: #0066cc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul { padding-left: 20px; margin: 8px 0; }
-    li { margin-bottom: 6px; }
-    .error-box {
-      background: #fff3cd;
-      padding: 10px 14px;
-      border-left: 4px solid #ffc107;
-      margin: 20px 0;
-      font-size: 13px;
+
+    .wrapper {
+      max-width: 680px;
+      margin: 24px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      padding: 28px 32px;
+      color: #ffffff;
+    }
+    .header-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 6px;
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .header-date {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+    .badge {
+      display: inline-block;
+      background: #f59e0b;
+      color: #1a1a2e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* Body */
+    .body {
+      padding: 28px 32px;
+    }
+
+    /* Digest content injected by Claude */
+    .digest h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 10px 14px;
+      background: #f1f5f9;
+      border-left: 4px solid #2563eb;
+      border-radius: 0 6px 6px 0;
+      margin: 28px 0 12px;
+    }
+    .digest h2:first-child { margin-top: 0; }
+
+    .digest ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 8px;
+    }
+    .digest li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+      color: #374151;
+    }
+    .digest li:last-child { border-bottom: none; }
+
+    .digest a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .digest a:hover { text-decoration: underline; }
+
+    .digest p {
+      font-size: 14px;
+      color: #374151;
+      margin: 8px 0;
+    }
+
+    .digest strong { color: #0f172a; }
+
+    /* Error box */
+    .error-box {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-left: 4px solid #f59e0b;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #92400e;
+    }
+    .error-box ul {
+      padding-left: 16px;
+      margin-top: 6px;
+    }
+
+    /* Footer */
     .footer {
-      font-size: 12px;
-      color: #999;
-      margin-top: 40px;
-      border-top: 1px solid #eee;
-      padding-top: 12px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 16px 32px;
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .wrapper { margin: 0; border-radius: 0; }
+      .header, .body { padding: 20px 18px; }
+      .footer { padding: 14px 18px; }
     }
   </style>
 </head>
 <body>
-  <h1>Your Daily Brief &mdash; {{ date }}</h1>
+  <div class="wrapper">
 
-  {{ digest | safe }}
+    <div class="header">
+      <div class="header-label">Daily News Brief</div>
+      <div class="header-title">Your Morning Digest</div>
+      <div class="header-date">{{ date }}</div>
+      {% if is_stock_day %}
+      <div class="badge">+ Weekly Stock Analysis</div>
+      {% endif %}
+    </div>
 
-  {% if errors %}
-  <div class="error-box">
-    <strong>Issues during fetch:</strong>
-    <ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
-  </div>
-  {% endif %}
+    <div class="body">
+      <div class="digest">
+        {{ digest | safe }}
+      </div>
 
-  <div class="footer">
-    This is an automated personal briefing. Stock information is for informational purposes only and does not constitute financial advice.
+      {% if errors %}
+      <div class="error-box">
+        <strong>Some data could not be fetched:</strong>
+        <ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="footer">
+      This is an automated personal briefing generated by DailyNewsBrief.<br>
+      Stock information is for informational purposes only and does not constitute financial advice.
+    </div>
+
   </div>
 </body>
 </html>
