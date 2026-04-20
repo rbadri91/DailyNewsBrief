@@ -1,4 +1,5 @@
 import os
+import time
 import yaml
 from datetime import date
 
@@ -34,9 +35,13 @@ def run():
 
     print(f"Running daily brief (stock day: {initial_state['is_stock_day']})")
     graph = build_graph()
+
+    start = time.perf_counter()
     final_state = graph.invoke(initial_state)
+    elapsed = time.perf_counter() - start
 
     print(f"Email sent: {final_state['email_sent']}")
+    print(f"Pipeline completed in {elapsed:.1f}s")
     if final_state["errors"]:
         print("Errors encountered:")
         for err in final_state["errors"]:

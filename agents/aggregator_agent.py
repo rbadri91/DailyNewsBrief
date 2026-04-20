@@ -8,14 +8,14 @@ from graph.state import BriefState
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
-# Cached: static across every daily run — saves ~$0.03/day on cache hits.
+# Cached: static across every daily run — saves on cache hits.
 SYSTEM_PROMPT = """You are creating a personalized daily news briefing digest.
 Format your response as clean HTML suitable for an email body (no <html>/<body>/<head> tags).
 Use <h2> for section headings, <ul>/<li> for article lists, <a href="..."> for links.
 Be concise but informative. Write in a friendly, newsletter tone."""
 
 
-def aggregator_agent(state: BriefState) -> BriefState:
+def aggregator_agent(state: BriefState) -> dict:
     is_stock_day = state.get("is_stock_day", False)
     today = date.today().strftime("%A, %B %d, %Y")
 
@@ -54,5 +54,4 @@ def aggregator_agent(state: BriefState) -> BriefState:
         f"output: {cache_stats.output_tokens}"
     )
 
-    state["digest"] = response.content[0].text
-    return state
+    return {"digest": response.content[0].text}

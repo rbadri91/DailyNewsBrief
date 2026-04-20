@@ -3,7 +3,7 @@ from tools.news_tools import fetch_sports_news
 from tools.sports_tools import fetch_team_last_result
 
 
-def sports_agent(state: BriefState) -> BriefState:
+def sports_agent(state: BriefState) -> dict:
     sports_prefs = state["preferences"].get("sports", [])
 
     all_teams = []
@@ -12,9 +12,11 @@ def sports_agent(state: BriefState) -> BriefState:
         all_sports.append(item["sport"])
         all_teams.extend(item.get("teams", []))
 
+    errors = []
+
     try:
         articles = fetch_sports_news(all_teams, all_sports, page_size=10)
-        state["sports_news"] = [
+        sports_news = [
             {
                 "title": a["title"],
                 "description": a.get("description", ""),
@@ -26,8 +28,8 @@ def sports_agent(state: BriefState) -> BriefState:
             if a.get("title") and "[Removed]" not in a.get("title", "")
         ]
     except Exception as e:
-        state["errors"].append(f"sports_agent news error: {e}")
-        state["sports_news"] = []
+        errors.append(f"sports_agent news error: {e}")
+        sports_news = []
 
     scores = []
     for team in all_teams:
@@ -43,10 +45,12 @@ def sports_agent(state: BriefState) -> BriefState:
                     "won": _did_team_win(team, last),
                 })
         except Exception as e:
-            state["errors"].append(f"sports_agent scores error for {team}: {e}")
+            errors.append(f"sports_agent scores error for {team}: {e}")
 
-    state["sports_scores"] = scores
-    return state
+    result = {"sports_news": sports_news, "sports_scores": scores}
+    if errors:
+        result["errors"] = errors
+    return result
 
 
 def _did_team_win(team_name: str, event: dict) -> bool:

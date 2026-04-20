@@ -1,4 +1,5 @@
-from typing import TypedDict
+import operator
+from typing import Annotated, TypedDict
 
 
 class BriefState(TypedDict):
@@ -10,4 +11,5 @@ class BriefState(TypedDict):
     digest: str
     email_sent: bool
     is_stock_day: bool
-    errors: list
+    # Annotated reducer merges error lists from parallel agents instead of overwriting
+    errors: Annotated[list, operator.add]
