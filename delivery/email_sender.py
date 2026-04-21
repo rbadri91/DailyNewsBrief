@@ -19,7 +19,7 @@ def _send(subject: str, html: str):
     resend.Emails.send({"from": EMAIL_FROM, "to": EMAIL_TO, "subject": subject, "html": html})
 
 
-def send_email_node(state: BriefState) -> BriefState:
+def send_email_node(state: BriefState) -> dict:
     today = date.today().strftime("%A, %B %d, %Y")
     is_stock_day = state.get("is_stock_day", False)
 
@@ -35,9 +35,6 @@ def send_email_node(state: BriefState) -> BriefState:
 
     try:
         _send(subject, html)
-        state["email_sent"] = True
+        return {"email_sent": True}
     except Exception as e:
-        state["errors"].append(f"email send error: {e}")
-        state["email_sent"] = False
-
-    return state
+        return {"email_sent": False, "errors": [f"email send error: {e}"]}

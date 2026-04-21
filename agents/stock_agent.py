@@ -2,9 +2,10 @@ from graph.state import BriefState
 from tools.stock_tools import fetch_stock_data, fetch_stock_news
 
 
-def stock_agent(state: BriefState) -> BriefState:
+def stock_agent(state: BriefState) -> dict:
     tickers = state["preferences"].get("stocks", [])
     stock_data = []
+    errors = []
 
     for ticker in tickers:
         try:
@@ -16,7 +17,9 @@ def stock_agent(state: BriefState) -> BriefState:
             ]
             stock_data.append(data)
         except Exception as e:
-            state["errors"].append(f"stock_agent error for {ticker}: {e}")
+            errors.append(f"stock_agent error for {ticker}: {e}")
 
-    state["stock_data"] = stock_data
-    return state
+    result = {"stock_data": stock_data}
+    if errors:
+        result["errors"] = errors
+    return result
