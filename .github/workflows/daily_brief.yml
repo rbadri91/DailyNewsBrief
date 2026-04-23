@@ -2,7 +2,7 @@ name: Daily News Brief
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # 10am EST = 15:00 UTC (note: fires at 11am during EDT/daylight saving)
+    - cron: '0 14 * * *'  # targets 10am CDT (UTC-5) with buffer for GitHub Actions scheduling delay
   workflow_dispatch:       # manual trigger for testing
 
 env:

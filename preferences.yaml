@@ -10,8 +10,8 @@ tech_topics:
 sports:
   - sport: NBA
     teams:
-      - Warriors
-      - Lakers
+      - Golden State Warriors
+      - Los Angeles Lakers
   - sport: NFL
     teams:
       - Patriots
@@ -37,5 +37,5 @@ stocks:
 
 email:
   send_time: "10:00"
-  timezone: "America/New_York"
+  timezone: "America/Chicago"
   stock_day: "Friday"
