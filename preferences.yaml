@@ -11,7 +11,7 @@ sports:
   - sport: NBA
     teams:
       - Golden State Warriors
-      - Lakers
+      - Los Angeles Lakers
   - sport: NFL
     teams:
       - Patriots

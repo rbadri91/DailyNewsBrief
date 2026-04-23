@@ -4,7 +4,7 @@ from graph.state import BriefState
 from tools.news_tools import fetch_sports_news
 from tools.sports_tools import fetch_team_last_result
 
-_MAX_SCORE_AGE_DAYS = 10
+_MAX_SCORE_AGE_DAYS = 14
 
 
 def sports_agent(state: BriefState) -> dict:
