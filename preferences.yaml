@@ -14,14 +14,23 @@ sports:
       - Los Angeles Lakers
   - sport: NFL
     teams:
-      - Patriots
+      - New England Patriots
+      - Dallas Cowboys
+      - Seattle Seahawks
   - sport: F1
   - sport: Cricket
     teams:
       - India
       - Chennai Super Kings
   - sport: Tennis
-
+    teams:
+      - Carlos Alcaraz
+      - Novak Djokovic
+      - Jannik Sinner
+      - Zverev
+      - Iga Swiatek
+      - Aryna Sabalenka
+      - Coco Gauff
 stocks:
   - AAPL
   - NVDA
@@ -33,6 +42,10 @@ stocks:
   - AMZN
   - NFLX
   - AMD
+  - SPY
+  - VOO
+  - IVV
+  - VTI
 
 
 email:
